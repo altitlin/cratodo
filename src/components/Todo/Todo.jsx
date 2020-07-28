@@ -4,12 +4,12 @@ import TodoInput from './TodoInput/TodoInput'
 import TodoList from './TodoList/TodoList'
 import TodoFooter from './TodoFooter/TodoFooter'
 
-export default function({ todos, onChange, onKeyPress, onClickBtn, removeTask, doTask, value, countDoneTasks }) {
+export default function() {
   return (
     <div className='todo'>
-      <TodoInput onChange={onChange} onKeyPress={onKeyPress} value={value} />
-      <TodoList todos={todos} removeTask={removeTask} doTask={doTask} />
-      <TodoFooter countDoneTasks={countDoneTasks} onClickBtn={onClickBtn} />
+      <TodoInput />
+      <TodoList />
+      <TodoFooter />
     </div>
   )
 }

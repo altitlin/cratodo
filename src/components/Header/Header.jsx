@@ -14,8 +14,8 @@ export default function Header() {
         <NavLink to='/' className='brand-logo'>Learn</NavLink>
         <ul id='nav-mobile' className='right hide-on-med-and-down'>
           {LINKS.map(({ id, to, title }) => (
-            <li>
-              <NavLink key={id} to={to}>{title}</NavLink>
+            <li key={id}>
+              <NavLink to={to}>{title}</NavLink>
             </li>
           ))}
         </ul>

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Todo from '../components/Todo/Todo'
 
 import { getId } from '../helpers'
+import Provider from '../context'
 
 const TODOS = [
   { id: '1', title: 'Task One', done: false },
@@ -82,18 +83,21 @@ export default class extends Component {
   render() {
     const { todos, inputText } = this.state
     const countDoneTasks = todos.filter(({ done }) => !done).length
+    const value = {
+      todos,
+      countDoneTasks,
+      value: inputText,
+      onClickBtn: this.clickBtnHandler,
+      onChange: this.inputChangeHandler,
+      onKeyPress: this.inputKeyPressHandler,
+      removeTask: this.removeTask,
+      doTask: this.doTask,
+    }
 
     return (
-      <Todo
-        todos={todos}
-        onClickBtn={this.clickBtnHandler}
-        onChange={this.inputChangeHandler}
-        onKeyPress={this.inputKeyPressHandler}
-        value={inputText}
-        countDoneTasks={countDoneTasks}
-        removeTask={this.removeTask}
-        doTask={this.doTask}
-      />
+      <Provider value={value}>
+        <Todo />
+      </Provider>
     )
   }
 }
