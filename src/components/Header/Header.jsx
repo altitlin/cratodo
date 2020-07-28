@@ -7,7 +7,7 @@ const LINKS = [
   { id: '3', to: '/typescript', title: 'TS' },
 ]
 
-export default function Header() {
+const Header = () => {
   return (
     <nav className='header'>
       <div className='nav-wrapper py'>
@@ -23,3 +23,5 @@ export default function Header() {
     </nav>
   )
 }
+
+export default Header

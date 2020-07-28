@@ -1,5 +1,7 @@
 import React from 'react'
 
-export default function() {
+const ReduxPage = () => {
   return <div className='center-align'>ReduxPage</div>
 }
+
+export default ReduxPage

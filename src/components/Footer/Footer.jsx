@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function() {
+const Footer = () => {
   return (
     <footer className="page-footer">
       <div className="footer-copyright py">
@@ -10,3 +10,5 @@ export default function() {
     </footer>
   )
 }
+
+export default Footer

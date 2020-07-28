@@ -1,5 +1,7 @@
 import React from 'react'
 
-export default function() {
+const TypeScriptPage = () => {
   return <div className='center-align'>TypeScriptPage</div>
 }
+
+export default TypeScriptPage

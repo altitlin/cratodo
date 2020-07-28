@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-export default function({ id, title, done, removeTask, doTask }) {
+const TodoItem = ({ id, title, done, removeTask, doTask }) => {
   return (
     <li className='collection-item'>
       <span className={done ? 'done' : ''}>{title}</span>
@@ -9,3 +10,13 @@ export default function({ id, title, done, removeTask, doTask }) {
     </li>
   )
 }
+
+TodoItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  done: PropTypes.bool.isRequired,
+  removeTask: PropTypes.func.isRequired,
+  doTask: PropTypes.func.isRequired,
+}
+
+export default TodoItem

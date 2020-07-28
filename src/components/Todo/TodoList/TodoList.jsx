@@ -4,7 +4,7 @@ import TodoItem from '../TodoItem/TodoItem'
 
 import { AppContext } from '../../../context'
 
-export default function() {
+const TodoList = () => {
   return (
     <AppContext.Consumer>
       {({ todos, removeTask, doTask }) => (
@@ -15,3 +15,5 @@ export default function() {
     </AppContext.Consumer>
   )
 }
+
+export default TodoList

@@ -17,7 +17,7 @@ const TODOS = [
 
 const TodoWithLoading = withLoading(Todo)
 
-export default class extends Component {
+class HomePage extends Component {
   constructor(props) {
     super(props)
 
@@ -129,3 +129,5 @@ export default class extends Component {
     )
   }
 }
+
+export default HomePage

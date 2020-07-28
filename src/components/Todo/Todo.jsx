@@ -6,7 +6,7 @@ import TodoFooter from './TodoFooter/TodoFooter'
 
 import { AppContext } from '../../context'
 
-export default function() {
+const Todo = () => {
   return (
     <AppContext.Consumer>
       {
@@ -30,3 +30,5 @@ export default function() {
     </AppContext.Consumer>
   )
 }
+
+export default Todo

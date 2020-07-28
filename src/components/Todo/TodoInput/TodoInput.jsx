@@ -1,6 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-export default function({ value, onChange, onKeyPress }) {
+const TodoInput = ({ value, onChange, onKeyPress }) => {
   return (
     <input
       type='text'
@@ -12,3 +13,11 @@ export default function({ value, onChange, onKeyPress }) {
     />
   )
 }
+
+TodoInput.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onKeyPress: PropTypes.func.isRequired,
+}
+
+export default TodoInput

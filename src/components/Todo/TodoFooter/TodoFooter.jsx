@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const BUTTONS = [
   { id: '1', title: 'All' },
@@ -6,7 +7,7 @@ const BUTTONS = [
   { id: '3', title: 'Done' },
 ]
 
-export default function({ countDoneTasks, onClickBtn }) {
+const TodoFooter = ({ countDoneTasks, onClickBtn }) => {
   return (
     <div className='todo__footer'>
       <span>Количество задач {countDoneTasks}</span>
@@ -20,3 +21,10 @@ export default function({ countDoneTasks, onClickBtn }) {
     </div>
   )
 }
+
+TodoFooter.propTypes = {
+  countDoneTasks: PropTypes.number.isRequired,
+  onClickBtn: PropTypes.func.isRequired,
+}
+
+export default TodoFooter

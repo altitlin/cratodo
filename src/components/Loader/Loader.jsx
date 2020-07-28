@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function() {
+const Loader = () => {
   return (
     <div className="preloader-wrapper small active">
       <div className="spinner-layer spinner-green-only">
@@ -17,3 +17,5 @@ export default function() {
   </div>
   )
 }
+
+export default Loader
