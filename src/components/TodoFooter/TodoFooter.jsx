@@ -7,13 +7,13 @@ const BUTTONS = [
   { id: '3', title: 'Done' },
 ]
 
-const TodoFooter = ({ countDoneTasks, onClickBtn }) => {
+const TodoFooter = ({ countActiveTasks, onClickBtn }) => {
   return (
     <div className='todo__footer'>
-      <span>Количество задач {countDoneTasks}</span>
+      <span>Количество задач {countActiveTasks}</span>
       <div>
         {BUTTONS.map(({ id, title }) => (
-          <button key={id} className="waves-effect waves-light btn-small" onClick={onClickBtn}>
+          <button key={id} className="waves-effect waves-light btn-small" onClick={() => onClickBtn(title.toLocaleUpperCase())}>
             {title}
           </button>
         ))}
@@ -23,7 +23,7 @@ const TodoFooter = ({ countDoneTasks, onClickBtn }) => {
 }
 
 TodoFooter.propTypes = {
-  countDoneTasks: PropTypes.number.isRequired,
+  countActiveTasks: PropTypes.number.isRequired,
   onClickBtn: PropTypes.func.isRequired,
 }
 
