@@ -1,105 +1,25 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { Switch, Route } from 'react-router-dom'
 
 import Header from './components/Header/Header'
-import Todo from './components/Todo/Todo'
 import Footer from './components/Footer/Footer'
 
-import { getId } from './helpers'
+import HomePage from './pages/HomePage'
+import ReactPage from './pages/ReactPage'
+import ReduxPage from './pages/ReduxPage'
+import TypeScriptPage from './pages/TypeScriptPage'
 
-const TODOS = [
-  { id: '1', title: 'Task One', done: false },
-  { id: '2', title: 'Task Two', done: false },
-  { id: '3', title: 'Task Three', done: true },
-  { id: '4', title: 'Task Four', done: false },
-]
-
-export default class App extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      todos: [],
-      inputText: ''
-    }
-  }
-
-  componentDidMount() {
-    this.setState(prev => ({
-      todos: [...prev.todos, ...TODOS]
-    }))
-  }
-
-  inputChangeHandler = ({ target: { value } }) => {
-    this.setState({ inputText: value })
-  }
-
-  inputKeyPressHandler = ({ key }) => {
-    const { inputText, todos } = this.state
-
-    if (key === 'Enter') {
-      this.setState(prev => ({
-        todos: [...prev.todos, { id: getId(todos.length), title: inputText, done: false }]
-      }))
-
-      this.setState({ inputText: '' })
-    }
-  }
-
-  removeTask = id => {
-    const { todos } = this.state
-
-    this.setState({
-      todos: todos.filter(todo => todo.id !== id)
-    })
-  }
-
-  doTask = id => {
-    const { todos } = this.state
-
-    this.setState({
-      todos: todos.map(todo => todo.id === id ? { ...todo, done: !todo.done } : todo)
-    })
-  }
-
-  clickBtnHandler = ({ target: { innerText } }) => {
-    let filteredTasks
-
-    switch (innerText) {
-      case 'ACTIVE':
-        filteredTasks = TODOS.filter(({ done }) => !done)
-        break;
-
-      case 'DONE':
-        filteredTasks = TODOS.filter(({ done }) => done)
-        break;
-
-      default:
-        filteredTasks = TODOS
-        break;
-    }
-
-    this.setState({ todos: filteredTasks })
-  }
-
-  render() {
-    const { todos, inputText } = this.state
-    const countDoneTasks = todos.filter(({ done }) => !done).length
-
-    return (
-      <>
-        <Header />
-        <Todo
-          todos={todos}
-          onClickBtn={this.clickBtnHandler}
-          onChange={this.inputChangeHandler}
-          onKeyPress={this.inputKeyPressHandler}
-          value={inputText}
-          countDoneTasks={countDoneTasks}
-          removeTask={this.removeTask}
-          doTask={this.doTask}
-        />
-        <Footer />
-      </>
-    )
-  }
+export default function() {
+  return (
+    <>
+      <Header />
+      <Switch>
+        <Route exact path='/' component={HomePage} />
+        <Route path='/react' component={ReactPage} />
+        <Route path='/redux' component={ReduxPage} />
+        <Route path='/typescript' component={TypeScriptPage} />
+      </Switch>
+      <Footer />
+    </>
+  )
 }
