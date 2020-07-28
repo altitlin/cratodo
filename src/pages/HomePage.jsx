@@ -18,14 +18,22 @@ export default class extends Component {
 
     this.state = {
       todos: [],
-      inputText: ''
+      inputText: '',
+      isLoader: false
     }
   }
 
   componentDidMount() {
     this.setState(prev => ({
-      todos: [...prev.todos, ...TODOS]
+      isLoader: !prev.isLoader,
     }))
+
+    setTimeout(() => {
+      this.setState(prev => ({
+        todos: [...prev.todos, ...TODOS],
+        isLoader: !prev.isLoader,
+      }))
+    }, 5000);
   }
 
   inputChangeHandler = ({ target: { value } }) => {
@@ -81,11 +89,12 @@ export default class extends Component {
   }
 
   render() {
-    const { todos, inputText } = this.state
+    const { todos, inputText, isLoader } = this.state
     const countDoneTasks = todos.filter(({ done }) => !done).length
     const value = {
       todos,
       countDoneTasks,
+      isLoader,
       value: inputText,
       onClickBtn: this.clickBtnHandler,
       onChange: this.inputChangeHandler,
