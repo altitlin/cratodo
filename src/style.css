@@ -1,0 +1,42 @@
+#root {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+}
+
+.py,
+.footer-copyright.py {
+  padding: 0 2rem;
+}
+
+.header {
+  margin-bottom: 4rem;
+}
+
+.page-footer {
+  padding-top: 0;
+}
+
+.todo {
+  justify-self: center;
+  width: 550px;
+}
+
+.collection-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+}
+
+.material-icons {
+  cursor: pointer;
+}
+
+.todo__footer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.btn-small {
+  margin-left: .75rem;
+}
