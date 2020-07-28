@@ -49,7 +49,7 @@ export default class extends Component {
     if (key === 'Enter') {
       this.setState(prev => ({
         todos: [...prev.todos, { id: getId(todos.length), title: inputText, done: false }],
-        textToast: 'Task added success!',
+        textToast: `${inputText} added success!`,
         inputText: '',
         showToast: !prev.showToast
       }))
