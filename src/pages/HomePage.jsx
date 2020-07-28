@@ -6,12 +6,16 @@ import { getId } from '../helpers'
 import Provider from '../context'
 import Alert from '../components/Alert/Alert'
 
+import withLoading from '../hocs/withLoading'
+
 const TODOS = [
   { id: '1', title: 'Task One', done: false },
   { id: '2', title: 'Task Two', done: false },
   { id: '3', title: 'Task Three', done: true },
   { id: '4', title: 'Task Four', done: false },
 ]
+
+const TodoWithLoading = withLoading(Todo)
 
 export default class extends Component {
   constructor(props) {
@@ -20,7 +24,7 @@ export default class extends Component {
     this.state = {
       todos: [],
       inputText: '',
-      isLoader: false,
+      isLoading: false,
       textToast: '',
       showToast: false,
     }
@@ -28,13 +32,13 @@ export default class extends Component {
 
   componentDidMount() {
     this.setState(prev => ({
-      isLoader: !prev.isLoader,
+      isLoading: !prev.isLoading,
     }))
 
     setTimeout(() => {
       this.setState(prev => ({
         todos: [...prev.todos, ...TODOS],
-        isLoader: !prev.isLoader,
+        isLoading: !prev.isLoading,
       }))
     }, 2500);
   }
@@ -103,12 +107,12 @@ export default class extends Component {
   }
 
   render() {
-    const { todos, inputText, isLoader, showToast, textToast } = this.state
+    const { todos, inputText, isLoading, showToast, textToast } = this.state
     const countDoneTasks = todos.filter(({ done }) => !done).length
     const value = {
       todos,
       countDoneTasks,
-      isLoader,
+      isLoading,
       value: inputText,
       onClickBtn: this.clickBtnHandler,
       onChange: this.inputChangeHandler,
@@ -119,7 +123,7 @@ export default class extends Component {
 
     return (
       <Provider value={value}>
-        <Todo />
+        <TodoWithLoading isLoading={value.isLoading} />
         <Alert showToast={showToast} text={textToast} />
       </Provider>
     )
