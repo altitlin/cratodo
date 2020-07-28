@@ -1,4 +1,16 @@
+@keyframes slideRight {
+  0%,
+  100% {
+    -webkit-transform: translateX(-100%);
+  }
+  10%,
+  90% {
+    -webkit-transform: translateX(50%);
+  }
+}
+
 #root {
+  position: relative;
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
@@ -43,4 +55,26 @@
 
 .btn-small {
   margin-left: .75rem;
+}
+
+.toast {
+  display: grid;
+  align-items: center;
+  position: absolute;
+  top: 6rem;
+  left: 0;
+  right: 0;
+  width: 300px;
+  height: 50px;
+  background-color: #e0f7fa;
+  border-radius: .5rem;
+  padding: 0 1rem;
+  transform: translateX(-100%);
+  animation: slideRight 3s;
+}
+
+.toast__text {
+  color: #000;
+  font-size: 1.25rem;
+  font-weight: 500;
 }

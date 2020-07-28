@@ -4,6 +4,7 @@ import Todo from '../components/Todo/Todo'
 
 import { getId } from '../helpers'
 import Provider from '../context'
+import Alert from '../components/Alert/Alert'
 
 const TODOS = [
   { id: '1', title: 'Task One', done: false },
@@ -19,7 +20,9 @@ export default class extends Component {
     this.state = {
       todos: [],
       inputText: '',
-      isLoader: false
+      isLoader: false,
+      textToast: '',
+      showToast: false,
     }
   }
 
@@ -33,7 +36,7 @@ export default class extends Component {
         todos: [...prev.todos, ...TODOS],
         isLoader: !prev.isLoader,
       }))
-    }, 5000);
+    }, 2500);
   }
 
   inputChangeHandler = ({ target: { value } }) => {
@@ -45,10 +48,15 @@ export default class extends Component {
 
     if (key === 'Enter') {
       this.setState(prev => ({
-        todos: [...prev.todos, { id: getId(todos.length), title: inputText, done: false }]
+        todos: [...prev.todos, { id: getId(todos.length), title: inputText, done: false }],
+        textToast: 'Task added success!',
+        inputText: '',
+        showToast: !prev.showToast
       }))
 
-      this.setState({ inputText: '' })
+      setTimeout(() => {
+        this.setState(prev => ({ showToast: !prev.showToast }))
+      }, 3000)
     }
   }
 
@@ -56,8 +64,14 @@ export default class extends Component {
     const { todos } = this.state
 
     this.setState({
-      todos: todos.filter(todo => todo.id !== id)
+      todos: todos.filter(todo => todo.id !== id),
+      textToast: 'Task removed success!',
+      showToast: true,
     })
+
+    setTimeout(() => {
+      this.setState(prev => ({ showToast: !prev.showToast }))
+    }, 3000)
   }
 
   doTask = id => {
@@ -89,7 +103,7 @@ export default class extends Component {
   }
 
   render() {
-    const { todos, inputText, isLoader } = this.state
+    const { todos, inputText, isLoader, showToast, textToast } = this.state
     const countDoneTasks = todos.filter(({ done }) => !done).length
     const value = {
       todos,
@@ -106,6 +120,7 @@ export default class extends Component {
     return (
       <Provider value={value}>
         <Todo />
+        <Alert showToast={showToast} text={textToast} />
       </Provider>
     )
   }

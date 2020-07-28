@@ -19,7 +19,6 @@ export default function() {
         <Route path='/redux' component={ReduxPage} />
         <Route path='/typescript' component={TypeScriptPage} />
       </Switch>
-      {/* <Loader /> */}
       <Footer />
     </>
   )
