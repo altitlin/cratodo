@@ -7,7 +7,9 @@ const wordsSpam = ['fuck', 'spam', 'php', 'pascal', 'basic', '18+', 'xxx']
 
 const filterSpam = ({ dispatch }) => next => action => {
   if (action.type === ADD_TODO) {
-    const found = wordsSpam.filter(word => action.payload.title.toLowerCase().includes(word))
+    const { title } = action.payload
+
+    const found = wordsSpam.filter(word => title.toLowerCase().includes(word))
 
     if (found.length) {
       return dispatch(showToast(messages.spam))

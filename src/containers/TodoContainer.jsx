@@ -15,7 +15,7 @@ import {
 } from '../redux/actions/todoActions'
 import { changeActiveFilter } from '../redux/actions/filterActions'
 
-import { getId, isValid } from '../helpers'
+import { getId } from '../helpers'
 import messages from '../messages'
 
 const TodoWithLoading = withLoading(Todo)
@@ -43,7 +43,7 @@ class TodoContainer extends Component {
     const { todos, addTodo } = this.props
     const { inputText } = this.state
 
-    if (key === 'Enter' && isValid(inputText)) {
+    if (key === 'Enter') {
       const newTodo = {
         id: getId(todos.length),
         title: inputText,

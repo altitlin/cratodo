@@ -2,6 +2,7 @@ import { createStore, compose, applyMiddleware } from 'redux'
 
 import thunk from './middlewares/thunk'
 import filterSpam from './middlewares/filterSpam'
+import valid from './middlewares/valid'
 
 import rootReducer from './reducers/index'
 
@@ -17,7 +18,7 @@ const configureStore = preloadedState => (
     rootReducer,
     preloadedState,
     composeEnhancers(
-      applyMiddleware(thunk, filterSpam)
+      applyMiddleware(thunk, filterSpam, valid)
     ),
   )
 )
