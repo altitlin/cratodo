@@ -17,6 +17,9 @@ const TODOS = [
   { id: '4', title: 'Task Four', done: false },
 ]
 
+const DELAY_REQUEST = 2500
+const DELAT_SHOW_TOAST = 3000
+
 const setTodos = todos => ({
   type: SET_TODOS,
   payload: todos,
@@ -55,7 +58,7 @@ export const doTodo = id => ({
 export const requestTodo = () => async dispatch => {
   try {
     dispatch(toggleIsLoading(true))
-    await delay(2500)
+    await delay(DELAY_REQUEST)
     dispatch(setTodos(TODOS))
     dispatch(toggleIsLoading(false))
   } catch (error) {
@@ -67,7 +70,7 @@ export const showToast = text => async dispatch => {
   try {
     dispatch(setTextToast(text))
     dispatch(toggleIsShowToast(true))
-    await delay(3000)
+    await delay(DELAT_SHOW_TOAST)
     dispatch(toggleIsShowToast(false))
   } catch (error) {
 
