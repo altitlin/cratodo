@@ -9,11 +9,13 @@ import {
   addTodo,
   removeTodo,
   doTodo,
-  requestTodo
+  requestTodo,
+  showToast,
 } from '../redux/actions/todoActions'
 import { changeActiveFilter } from '../redux/actions/filterActions'
 
 import { getId } from '../helpers'
+import Alert from '../components/Alert/Alert'
 
 const TodoWithLoading = withLoading(Todo)
 
@@ -38,7 +40,7 @@ class TodoContainer extends Component {
   }
 
   addTask = ({ key }) => {
-    const { todos, addTodo } = this.props
+    const { todos, addTodo, showToast } = this.props
     const { inputText } = this.state
 
     if (key === 'Enter') {
@@ -49,6 +51,7 @@ class TodoContainer extends Component {
       }
 
       addTodo(newTodo)
+      showToast()
 
       this.setState({
         inputText: '',
@@ -58,9 +61,10 @@ class TodoContainer extends Component {
   }
 
   removeTask = id => {
-    const { removeTodo } = this.props
+    const { removeTodo, showToast } = this.props
 
     removeTodo(id)
+    showToast()
 
     this.setState({
       textToast: 'Task removed success!',
@@ -81,24 +85,27 @@ class TodoContainer extends Component {
   }
 
   render() {
-    const { todos, isLoading, doTodo, changeActiveFilter, activeFilter } = this.props
-    const { inputText } = this.state
+    const { todos, isLoading, doTodo, changeActiveFilter, activeFilter, isShowToast } = this.props
+    const { inputText, textToast } = this.state
     const filteredTasks = this.filterTasks(todos, activeFilter)
     const countActiveTasks = filteredTasks.filter(({ done }) => !done).length
 
 
     return (
-      <TodoWithLoading
-        isLoading={isLoading}
-        todos={filteredTasks}
-        value={inputText}
-        countActiveTasks={countActiveTasks}
-        doTodo={doTodo}
-        onChange={this.inputChangeHandler}
-        onKeyPress={this.addTask}
-        onClickBtn={changeActiveFilter}
-        removeTask={this.removeTask}
-      />
+      <>
+        <TodoWithLoading
+          isLoading={isLoading}
+          todos={filteredTasks}
+          value={inputText}
+          countActiveTasks={countActiveTasks}
+          doTodo={doTodo}
+          onChange={this.inputChangeHandler}
+          onKeyPress={this.addTask}
+          onClickBtn={changeActiveFilter}
+          removeTask={this.removeTask}
+        />
+        <Alert text={textToast} showToast={isShowToast} />
+      </>
     )
   }
 }
@@ -111,6 +118,7 @@ const mapDispatchToProps = {
   doTodo,
   requestTodo,
   changeActiveFilter,
+  showToast,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoContainer)

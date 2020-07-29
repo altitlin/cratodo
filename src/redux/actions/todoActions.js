@@ -4,6 +4,7 @@ import {
   DO_TODO,
   SET_TODOS,
   TOGGLE_IS_LOADING,
+  TOGGLE_IS_SHOW_TOAST,
 } from '../constants'
 
 import { delay } from '../../helpers'
@@ -15,8 +16,6 @@ const TODOS = [
   { id: '4', title: 'Task Four', done: false },
 ]
 
-const DELAY = 2500
-
 const setTodos = todos => ({
   type: SET_TODOS,
   payload: todos,
@@ -25,6 +24,11 @@ const setTodos = todos => ({
 const toggleIsLoading = isLoading => ({
   type: TOGGLE_IS_LOADING,
   payload: isLoading,
+})
+
+const toggleIsShowToast = isShowToast => ({
+  type: TOGGLE_IS_SHOW_TOAST,
+  payload: isShowToast,
 })
 
 export const addTodo = newTodo => ({
@@ -45,9 +49,19 @@ export const doTodo = id => ({
 export const requestTodo = () => async dispatch => {
   try {
     dispatch(toggleIsLoading(true))
-    await delay(DELAY)
+    await delay(2500)
     dispatch(setTodos(TODOS))
     dispatch(toggleIsLoading(false))
+  } catch (error) {
+
+  }
+}
+
+export const showToast = () => async dispatch => {
+  try {
+    dispatch(toggleIsShowToast(true))
+    await delay(3000)
+    dispatch(toggleIsShowToast(false))
   } catch (error) {
 
   }
