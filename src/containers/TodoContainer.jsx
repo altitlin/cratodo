@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import Alert from '../components/Alert/Alert'
 import Todo from '../components/Todo/Todo'
 
 import withLoading from '../hocs/withLoading'
@@ -14,8 +15,8 @@ import {
 } from '../redux/actions/todoActions'
 import { changeActiveFilter } from '../redux/actions/filterActions'
 
-import { getId } from '../helpers'
-import Alert from '../components/Alert/Alert'
+import { getId, isValid } from '../helpers'
+import messages from '../messages'
 
 const TodoWithLoading = withLoading(Todo)
 
@@ -43,7 +44,7 @@ class TodoContainer extends Component {
     const { todos, addTodo, showToast } = this.props
     const { inputText } = this.state
 
-    if (key === 'Enter') {
+    if (key === 'Enter' && isValid(inputText)) {
       const newTodo = {
         id: getId(todos.length),
         title: inputText,
@@ -55,8 +56,14 @@ class TodoContainer extends Component {
 
       this.setState({
         inputText: '',
-        textToast: `${inputText} added success!`,
+        textToast: messages.successAdd,
       })
+    } else {
+      this.setState({
+        textToast: messages.errorAdd,
+      })
+
+      showToast()
     }
   }
 
@@ -67,7 +74,7 @@ class TodoContainer extends Component {
     showToast()
 
     this.setState({
-      textToast: 'Task removed success!',
+      textToast: messages.successRemove,
     })
   }
 

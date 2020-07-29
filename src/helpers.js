@@ -5,3 +5,5 @@ export const delay = ms => new Promise(resolve => {
     resolve()
   }, ms)
 })
+
+export const isValid = nameTask => nameTask !== '' && nameTask.length > 3
