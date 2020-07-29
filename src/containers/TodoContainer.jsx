@@ -26,7 +26,6 @@ class TodoContainer extends Component {
 
     this.state = {
       inputText: '',
-      textToast: '',
     }
   }
 
@@ -41,7 +40,7 @@ class TodoContainer extends Component {
   }
 
   addTask = ({ key }) => {
-    const { todos, addTodo, showToast } = this.props
+    const { todos, addTodo } = this.props
     const { inputText } = this.state
 
     if (key === 'Enter' && isValid(inputText)) {
@@ -52,18 +51,8 @@ class TodoContainer extends Component {
       }
 
       addTodo(newTodo)
-      showToast()
 
-      this.setState({
-        inputText: '',
-        textToast: messages.successAdd,
-      })
-    } else {
-      this.setState({
-        textToast: messages.errorAdd,
-      })
-
-      showToast()
+      this.setState({ inputText: '' })
     }
   }
 
@@ -71,11 +60,7 @@ class TodoContainer extends Component {
     const { removeTodo, showToast } = this.props
 
     removeTodo(id)
-    showToast()
-
-    this.setState({
-      textToast: messages.successRemove,
-    })
+    showToast(messages.successRemove)
   }
 
   filterTasks = (todos, activeFilter) => {
@@ -92,8 +77,8 @@ class TodoContainer extends Component {
   }
 
   render() {
-    const { todos, isLoading, doTodo, changeActiveFilter, activeFilter, isShowToast } = this.props
-    const { inputText, textToast } = this.state
+    const { todos, isLoading, doTodo, changeActiveFilter, activeFilter, isShowToast, textToast } = this.props
+    const { inputText } = this.state
     const filteredTasks = this.filterTasks(todos, activeFilter)
     const countActiveTasks = filteredTasks.filter(({ done }) => !done).length
 

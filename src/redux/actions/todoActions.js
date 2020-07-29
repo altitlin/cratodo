@@ -3,6 +3,7 @@ import {
   REMOVE_TODO,
   DO_TODO,
   SET_TODOS,
+  SET_TEXT_TOAST,
   TOGGLE_IS_LOADING,
   TOGGLE_IS_SHOW_TOAST,
 } from '../constants'
@@ -19,6 +20,11 @@ const TODOS = [
 const setTodos = todos => ({
   type: SET_TODOS,
   payload: todos,
+})
+
+const setTextToast = text => ({
+  type: SET_TEXT_TOAST,
+  payload: text,
 })
 
 const toggleIsLoading = isLoading => ({
@@ -57,8 +63,9 @@ export const requestTodo = () => async dispatch => {
   }
 }
 
-export const showToast = () => async dispatch => {
+export const showToast = text => async dispatch => {
   try {
+    dispatch(setTextToast(text))
     dispatch(toggleIsShowToast(true))
     await delay(3000)
     dispatch(toggleIsShowToast(false))

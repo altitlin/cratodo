@@ -3,6 +3,7 @@ import {
   REMOVE_TODO,
   DO_TODO,
   SET_TODOS,
+  SET_TEXT_TOAST,
   TOGGLE_IS_LOADING,
   TOGGLE_IS_SHOW_TOAST,
 } from '../constants'
@@ -11,6 +12,7 @@ const initialState = {
   todos: [],
   isLoading: false,
   isShowToast: false,
+  textToast: '',
 }
 
 const todoReducer = (state = initialState, { type, payload }) => {
@@ -19,6 +21,12 @@ const todoReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         todos: payload,
+      }
+
+    case SET_TEXT_TOAST:
+      return {
+        ...state,
+        textToast: payload,
       }
 
     case TOGGLE_IS_LOADING:
