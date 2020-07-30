@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Alert from '../components/Alert/Alert'
 import Todo from '../components/Todo/Todo'
@@ -9,61 +9,31 @@ import withLoading from '../hocs/withLoading'
 import {
   addTodo,
   removeTodo,
-  doTodo,
   requestTodo,
   showToast,
+  doTodo,
 } from '../redux/actions/todoActions'
-import { changeActiveFilter } from '../redux/actions/filterActions'
 
 import { getId } from '../helpers'
 import messages from '../messages'
 
 const TodoWithLoading = withLoading(Todo)
 
-class TodoContainer extends Component {
-  constructor(props) {
-    super(props)
+const TodoContainer = () => {
+  const [inputText, setInputText] = useState('')
 
-    this.state = {
-      inputText: '',
-    }
-  }
+  const dispatch = useDispatch()
+  const {
+    todos,
+    isLoading,
+    textToast,
+    isShowToast,
+    activeFilter,
+  } = useSelector(state => ({ ...state.todo, ...state.filter }))
 
-  componentDidMount() {
-    const { requestTodo } = this.props
+  useEffect(() => dispatch(requestTodo()), [dispatch])
 
-    requestTodo()
-  }
-
-  inputChangeHandler = ({ target: { value } }) => {
-    this.setState({ inputText: value })
-  }
-
-  addTask = ({ key }) => {
-    const { todos, addTodo } = this.props
-    const { inputText } = this.state
-
-    if (key === 'Enter') {
-      const newTodo = {
-        id: getId(todos.length),
-        title: inputText,
-        done: false,
-      }
-
-      addTodo(newTodo)
-
-      this.setState({ inputText: '' })
-    }
-  }
-
-  removeTask = id => {
-    const { removeTodo, showToast } = this.props
-
-    removeTodo(id)
-    showToast(messages.successRemove)
-  }
-
-  filterTasks = (todos, activeFilter) => {
+  const filterTasks = (todos, activeFilter) => {
     switch (activeFilter) {
       case 'ACTIVE':
         return todos.filter(({ done }) => !done)
@@ -76,41 +46,47 @@ class TodoContainer extends Component {
     }
   }
 
-  render() {
-    const { todos, isLoading, doTodo, changeActiveFilter, activeFilter, isShowToast, textToast } = this.props
-    const { inputText } = this.state
-    const filteredTasks = this.filterTasks(todos, activeFilter)
-    const countActiveTasks = filteredTasks.filter(({ done }) => !done).length
+  const inputChangeHandler = ({ target: { value } }) => setInputText(value)
 
+  const addTask = ({ key }) => {
+    const newTodo = {
+      id: getId(todos.length),
+      title: inputText,
+      done: false,
+    }
 
-    return (
-      <>
-        <TodoWithLoading
-          isLoading={isLoading}
-          todos={filteredTasks}
-          value={inputText}
-          countActiveTasks={countActiveTasks}
-          doTodo={doTodo}
-          onChange={this.inputChangeHandler}
-          onKeyPress={this.addTask}
-          onClickBtn={changeActiveFilter}
-          removeTask={this.removeTask}
-        />
-        <Alert text={textToast} showToast={isShowToast} />
-      </>
-    )
+    if (key === 'Enter') {
+      dispatch(addTodo(newTodo))
+
+      setInputText('')
+    }
   }
+
+  const removeTask = id => {
+    dispatch(removeTodo(id))
+    dispatch(showToast(messages.successRemove))
+  }
+
+  const completeTodo = id => dispatch(doTodo(id))
+
+  const filteredTasks = filterTasks(todos, activeFilter)
+  const countActiveTasks = filteredTasks.filter(({ done }) => !done).length
+
+  return (
+    <>
+      <TodoWithLoading
+        isLoading={isLoading}
+        todos={filteredTasks}
+        value={inputText}
+        countActiveTasks={countActiveTasks}
+        onChange={inputChangeHandler}
+        onKeyPress={addTask}
+        removeTask={removeTask}
+        doTodo={completeTodo}
+      />
+      <Alert text={textToast} showToast={isShowToast} />
+    </>
+  )
 }
 
-const mapStateToProps = state => ({ ...state.todo, ...state.filter })
-
-const mapDispatchToProps = {
-  addTodo,
-  removeTodo,
-  doTodo,
-  requestTodo,
-  changeActiveFilter,
-  showToast,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoContainer)
+export default TodoContainer

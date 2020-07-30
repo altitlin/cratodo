@@ -1,5 +1,8 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
+
+import { changeActiveFilter } from '../../redux/actions/filterActions'
 
 const BUTTONS = [
   { id: '1', title: 'All' },
@@ -7,13 +10,19 @@ const BUTTONS = [
   { id: '3', title: 'Done' },
 ]
 
-const TodoFooter = ({ countActiveTasks, onClickBtn }) => {
+const TodoFooter = ({ countActiveTasks }) => {
+  const dispatch = useDispatch()
+
+  const onClickBtn = title => {
+    dispatch(changeActiveFilter(title.toLocaleUpperCase()))
+  }
+
   return (
     <div className='todo__footer'>
       <span>Количество задач {countActiveTasks}</span>
       <div>
         {BUTTONS.map(({ id, title }) => (
-          <button key={id} className="waves-effect waves-light btn-small" onClick={() => onClickBtn(title.toLocaleUpperCase())}>
+          <button key={id} className="waves-effect waves-light btn-small" onClick={() => onClickBtn(title)}>
             {title}
           </button>
         ))}
@@ -24,7 +33,6 @@ const TodoFooter = ({ countActiveTasks, onClickBtn }) => {
 
 TodoFooter.propTypes = {
   countActiveTasks: PropTypes.number.isRequired,
-  onClickBtn: PropTypes.func.isRequired,
 }
 
 export default TodoFooter
