@@ -13,6 +13,7 @@ import {
   showToast,
   doTodo,
 } from '../redux/actions/todoActions'
+import { changeActiveFilter } from '../redux/actions/filterActions'
 
 import { getId } from '../helpers'
 import messages from '../messages'
@@ -67,6 +68,8 @@ const TodoContainer = () => {
     dispatch(showToast(messages.successRemove))
   }
 
+  const changeFilter = filter => dispatch(changeActiveFilter(filter))
+
   const completeTodo = id => dispatch(doTodo(id))
 
   const filteredTasks = filterTasks(todos, activeFilter)
@@ -81,6 +84,7 @@ const TodoContainer = () => {
         countActiveTasks={countActiveTasks}
         onChange={inputChangeHandler}
         onKeyPress={addTask}
+        onClickBtn={changeFilter}
         removeTask={removeTask}
         doTodo={completeTodo}
       />

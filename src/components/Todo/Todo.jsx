@@ -11,6 +11,7 @@ const Todo = ({
   countActiveTasks,
   onChange,
   onKeyPress,
+  onClickBtn,
   removeTask,
   doTodo,
 }) => {
@@ -18,7 +19,7 @@ const Todo = ({
     <div className='todo'>
       <TodoInput value={value} onChange={onChange} onKeyPress={onKeyPress} />
       {todos && todos.length !== 0 && <TodoList todos={todos} removeTask={removeTask} doTodo={doTodo} />}
-      {todos && todos.length !== 0 && <TodoFooter countActiveTasks={countActiveTasks} />}
+      {todos && todos.length !== 0 && <TodoFooter countActiveTasks={countActiveTasks} onClickBtn={onClickBtn} />}
     </div>
   )
 }
@@ -33,6 +34,7 @@ Todo.propTypes = {
   countActiveTasks: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   onKeyPress: PropTypes.func.isRequired,
+  onClickBtn: PropTypes.func.isRequired,
   removeTask: PropTypes.func.isRequired,
   doTodo: PropTypes.func.isRequired,
 }
